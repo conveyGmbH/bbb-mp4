@@ -53,7 +53,7 @@ async function main() {
 
         // set duration to 0 
         var duration = 0
-        z
+        
         browser = await puppeteer.launch(options)
         const pages = await browser.pages()
 
