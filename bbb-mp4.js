@@ -14,20 +14,22 @@ var height = 1080;
 var options = {
     headless: false,
     args: [
-        '--disable-infobars',
-        '--no-sandbox',
         '--disable-dev-shm-usage',
         '--start-fullscreen',
         '--app=https://www.google.com/',
         `--window-size=${width},${height}`
     ],
-    ignoreDefaultArgs: ["--enable-automation"],
+    ignoreDefaultArgs: [
+        "--enable-automation",
+        "--no-sandbox"
+    ],
     defaultViewport: null,
 }
 options.executablePath = "/usr/bin/google-chrome"
 async function main() {
     let browser, page;
     try {
+        console.log("startSync");
         xvfb.startSync()
 
         var url = process.argv[2];
@@ -121,10 +123,14 @@ async function main() {
     } catch (err) {
         console.log(err)
     } finally {
+        console.log("close page");
         page.close && await page.close()
+        console.log("close browser");
         browser.close && await browser.close()
-            // Stop xvfb after browser close
+        // Stop xvfb after browser close
+        console.log("stopSync ");
         xvfb.stopSync()
+        process.exit(0);
     }
 }
 
