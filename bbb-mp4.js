@@ -19,8 +19,9 @@ var options = {
         '--disable-dev-shm-usage',
         '--start-fullscreen',
         '--app=https://www.google.com/',
-        `--window-size=${width},${height}`,
+        `--window-size=${width},${height}`
     ],
+    ignoreDefaultArgs: ["--enable-automation"]
 }
 options.executablePath = "/usr/bin/google-chrome"
 async function main() {
