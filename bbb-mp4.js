@@ -93,9 +93,9 @@ async function main() {
                 for (var i = 0; i < elements.length; i++) {
                     var element = elements[i];
                     if (element && element.style) {
-                        element.style.visibility = hidden;
-                        element.style.width = 0;
-                        element.style.height = 0;
+                        element.style.visibility = "hidden";
+                        element.style.width = "0";
+                        element.style.height = "0";
                     }
                 }
             }
@@ -104,6 +104,8 @@ async function main() {
         console.log("wait for audioModal/listenOnlyBtn");
         await page.waitForSelector('div[data-test="audioModal"] button[data-test="listenOnlyBtn"]');
         page.click('div[data-test="audioModal"] button[data-test="listenOnlyBtn"]');
+
+        await page.waitForTimeout(2 * 1000);
 
         console.log("Start capturing screen with ffmpeg");
         const ls = child_process.spawn('sh', ['ffmpeg-cmd.sh', ' ',
