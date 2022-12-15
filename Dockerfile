@@ -33,7 +33,7 @@ RUN apt-get install --yes nodejs
 COPY *.sh ./
 COPY *.js ./
 COPY *.json ./
-COPY .env ./ 
+COPY *.env ./ 
 RUN mkdir download
 
 #Install npm scripts
@@ -42,6 +42,7 @@ RUN npm install
 
 #Initialize ENV
 ENV REC_URL=" "
+ENV MEETING_ID=" "
 
 # Command that will execute when container starts
 ENTRYPOINT ["sh","docker-entrypoint.sh"]
