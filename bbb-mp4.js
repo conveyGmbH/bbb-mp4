@@ -14,15 +14,18 @@ var height = 1080;
 var options = {
     headless: false,
     args: [
+        '--no-sandbox',
+        '--disable-setuid-sandbox',
+        '--disable-infobar',
+        '--excludeSwitches',
+        '--useAutomationExtension',
         '--disable-dev-shm-usage',
         '--start-fullscreen',
         '--app=https://www.google.com/',
+        '--window-position=0,0',
         `--window-size=${width},${height}`
     ],
-    ignoreDefaultArgs: [
-        "--enable-automation",
-        "--no-sandbox"
-    ],
+    excludeSwitches: 'enable-automation',
     defaultViewport: null,
 }
 options.executablePath = "/usr/bin/google-chrome"
