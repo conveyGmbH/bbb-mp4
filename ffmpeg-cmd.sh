@@ -1,7 +1,6 @@
 #!usr/bin/sh
-DURATION=$1
-EXPORT_NAME=$2
-DISPLAY_NUMBER=$3
+EXPORT_NAME=$1
+DISPLAY_NUMBER=$2
 
 #Record the BBB playback, playing in Google browser in xvfb virtual screen, as MP4 video
 ffmpeg -y -nostats -draw_mouse 0 -s 1920x1080 \
