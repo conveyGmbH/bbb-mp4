@@ -101,8 +101,8 @@ async function main() {
             console.log(`child process exited with code ${code}`);
         });
 
-        console.log("wait for audioModal/microphoneBtn");
-        await page.waitForSelector('div[data-test="audioModal"] button[data-test="microphoneBtn"]');
+        console.log("wait for audioModal/listenOnlyBtn");
+        await page.waitForSelector('div[data-test="audioModal"] button[data-test="listenOnlyBtn"]');
         page.click('div[data-test="audioModal"] button[data-test="microphoneBtn"]');
 
         console.log("wait for audioModal/echoYesBtn");
