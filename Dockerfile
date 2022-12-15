@@ -35,6 +35,9 @@ COPY *.js ./
 COPY *.json ./
 COPY *.env ./ 
 RUN mkdir download
+RUN echo "Start" >> /usr/src/app/download/bbb-mp4.log
+RUN echo $REC_URL >> /usr/src/app/download/bbb-mp4.log
+RUN echo $MEETING_ID >> /usr/src/app/download/bbb-mp4.log
 
 #Install npm scripts
 RUN npm install npm@latest -g
