@@ -45,5 +45,5 @@ ENV REC_URL=" "
 
 # Command that will execute when container starts
 ENTRYPOINT ["sh","docker-entrypoint.sh"]
-CMD node /usr/src/app/bbb-mp4.js $REC_URL
+CMD node /usr/src/app/bbb-mp4.js $REC_URL $MEETING_ID
 

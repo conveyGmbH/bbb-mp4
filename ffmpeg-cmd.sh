@@ -4,7 +4,7 @@ EXPORT_NAME=$2
 DISPLAY_NUMBER=$3
 
 #Record the BBB playback, playing in Google browser in xvfb virtual screen, as MP4 video
-ffmpeg -y -nostats -draw_mouse 0 -s 1280x800 \
+ffmpeg -y -nostats -draw_mouse 0 -s 1920x1080 \
 	-framerate 30 \
 	-f x11grab -thread_queue_size 1024 \
 	-i :$DISPLAY_NUMBER \
@@ -15,6 +15,5 @@ ffmpeg -y -nostats -draw_mouse 0 -s 1280x800 \
 	-crf 22  \
 	-pix_fmt yuv420p \
 	-preset fast \
-	-movflags faststart \
-	-t $DURATION \
+	-movflags frag_keyframe+separate_moof+omit_tfhd_offset+empty_moov \
 	/usr/src/app/download/$EXPORT_NAME.mp4
