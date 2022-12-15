@@ -17,7 +17,7 @@ while ! pulseaudio --check && [ $p -lt 2 ] ; do
 	i=0
 
 	while ! pulseaudio --check && [ $i -lt 3 ] ; do
-		echo "Waiting for pulseaudio to start..."
+		echo "Waiting for pulseaudio to start......"
 		sleep 1
 		i=$((i+1))
 	done
