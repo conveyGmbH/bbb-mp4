@@ -21,7 +21,8 @@ var options = {
         '--app=https://www.google.com/',
         `--window-size=${width},${height}`
     ],
-    ignoreDefaultArgs: ["--enable-automation"]
+    ignoreDefaultArgs: ["--enable-automation"],
+    defaultViewport: null,
 }
 options.executablePath = "/usr/bin/google-chrome"
 async function main() {
@@ -81,6 +82,11 @@ async function main() {
         console.log("wait for layout");
         await page.waitForSelector('#conference.mediaview #layout');
 
+
+        console.log("wait for audioModal/listenOnlyBtn");
+        await page.waitForSelector('div[data-test="audioModal"] button[data-test="listenOnlyBtn"]');
+        page.click('div[data-test="audioModal"] button[data-test="microphoneBtn"]');
+
         console.log("Start capturing screen with ffmpeg");
         const ls = child_process.spawn('sh', ['ffmpeg-cmd.sh', ' ',
             `${exportname}`, ' ',
@@ -100,14 +106,6 @@ async function main() {
         ls.on('close', (code) => {
             console.log(`child process exited with code ${code}`);
         });
-
-        console.log("wait for audioModal/listenOnlyBtn");
-        await page.waitForSelector('div[data-test="audioModal"] button[data-test="listenOnlyBtn"]');
-        page.click('div[data-test="audioModal"] button[data-test="microphoneBtn"]');
-
-        console.log("wait for audioModal/echoYesBtn");
-        await page.waitForSelector('div[data-test="audioModal"] button[data-test="echoYesBtn"]');
-        page.click('div[data-test="audioModal"] button[data-test="echoYesBtn"]');
 
         console.log("wait for meetingEndedModalTitle");
         /*await page.waitFor((20 * 1000));*/
