@@ -2,7 +2,7 @@
 
 # Load .env variables
 set -a
-source <(cat  /var/www/bbb-mp4/env-example.env | \
+source <(cat  /var/www/bbb-mp4/config.env | \
     sed -e '/^#/d;/^\s*$/d' -e "s/'/'\\\''/g" -e "s/=\(.*\)/='\1'/g")
 set +a
 
