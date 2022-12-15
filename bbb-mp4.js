@@ -81,8 +81,12 @@ async function main() {
         console.log("wait for layout");
         await page.waitForSelector('#conference.mediaview #layout');
         console.log("wait for closeModal");
-        await page.waitForSelector('div[data-test="audioModal"] button[data-test="closeModal"]');
-        page.click('div[data-test="audioModal"] button[data-test="closeModal"]');
+
+        await page.waitForSelector('div[data-test="audioModal"] button[data-test="microphoneBtn"]');
+        page.click('div[data-test="audioModal"] button[data-test="microphoneBtn"]');
+
+        await page.waitForSelector('div[data-test="audioModal"] button[data-test="echoYesBtn"]');
+        page.click('div[data-test="audioModal"] button[data-test="echoYesBtn"]');
 
         console.log("Start capturing screen with ffmpeg");
         const ls = child_process.spawn('sh', ['ffmpeg-cmd.sh', ' ',
