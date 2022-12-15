@@ -15,11 +15,12 @@ var options = {
     headless: false,
     args: [
         '--no-sandbox',
-        '--disable-setuid-sandbox',
+        '--enable-logging',
         '--disable-infobar',
         '--excludeSwitches',
         '--useAutomationExtension',
         '--disable-dev-shm-usage',
+        '--disable-setuid-sandbox',
         '--start-fullscreen',
         '--app=https://www.google.com/',
         '--window-position=0,0',
@@ -52,7 +53,7 @@ async function main() {
 
         // set duration to 0 
         var duration = 0
-
+        z
         browser = await puppeteer.launch(options)
         const pages = await browser.pages()
 
@@ -87,6 +88,18 @@ async function main() {
         console.log("wait for layout");
         await page.waitForSelector('#conference.mediaview #layout');
 
+        await page.$$eval('#conference.mediaview #layout > section[aria-label="Actions bar"] button, #conference.mediaview #layout > section[aria-label="Aktionsmenü"] button', 
+            elements => { if (elements.length > 0)
+                for (var i = 0; i < elements.length; i++) {
+                    var element = elements[i];
+                    if (element && element.style) {
+                        element.style.visibility = hidden;
+                        element.style.width = 0;
+                        element.style.height = 0;
+                    }
+                }
+            }
+        );
 
         console.log("wait for audioModal/listenOnlyBtn");
         await page.waitForSelector('div[data-test="audioModal"] button[data-test="listenOnlyBtn"]');
