@@ -33,11 +33,11 @@ RUN apt-get install --yes nodejs
 COPY *.sh ./
 COPY *.js ./
 COPY *.json ./
-COPY *.env ./ 
+
 RUN mkdir download
-RUN echo "Start" >> /usr/src/app/download/bbb-mp4.log
-RUN echo $REC_URL >> /usr/src/app/download/bbb-mp4.log
-RUN echo $MEETING_ID >> /usr/src/app/download/bbb-mp4.log
+RUN echo "Start" >> download/bbb-mp4.log
+RUN echo $REC_URL >> download/bbb-mp4.log
+RUN echo $MEETING_ID >> download/bbb-mp4.log
 
 #Install npm scripts
 RUN npm install npm@latest -g
@@ -45,5 +45,5 @@ RUN npm install
 
 # Command that will execute when container starts
 ENTRYPOINT ["sh","docker-entrypoint.sh"]
-CMD node /usr/src/app/bbb-mp4.js $REC_URL $MEETING_ID >> /usr/src/app/download/bbb-mp4.log
+CMD node /usr/src/app/bbb-mp4.js $REC_URL $MEETING_ID >> download/bbb-mp4.log
 
