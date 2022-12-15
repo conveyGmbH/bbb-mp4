@@ -80,13 +80,6 @@ async function main() {
 
         console.log("wait for layout");
         await page.waitForSelector('#conference.mediaview #layout');
-        console.log("wait for closeModal");
-
-        await page.waitForSelector('div[data-test="audioModal"] button[data-test="microphoneBtn"]');
-        page.click('div[data-test="audioModal"] button[data-test="microphoneBtn"]');
-
-        await page.waitForSelector('div[data-test="audioModal"] button[data-test="echoYesBtn"]');
-        page.click('div[data-test="audioModal"] button[data-test="echoYesBtn"]');
 
         console.log("Start capturing screen with ffmpeg");
         const ls = child_process.spawn('sh', ['ffmpeg-cmd.sh', ' ',
@@ -108,7 +101,15 @@ async function main() {
             console.log(`child process exited with code ${code}`);
         });
 
-        console.log("wait for end");
+        console.log("wait for audioModal/microphoneBtn");
+        await page.waitForSelector('div[data-test="audioModal"] button[data-test="microphoneBtn"]');
+        page.click('div[data-test="audioModal"] button[data-test="microphoneBtn"]');
+
+        console.log("wait for audioModal/echoYesBtn");
+        await page.waitForSelector('div[data-test="audioModal"] button[data-test="echoYesBtn"]');
+        page.click('div[data-test="audioModal"] button[data-test="echoYesBtn"]');
+
+        console.log("wait for meetingEndedModalTitle");
         /*await page.waitFor((20 * 1000));*/
         var meetingEnd = false;
         while (!meetingEnd) {
