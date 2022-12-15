@@ -33,6 +33,7 @@ async function main() {
             console.warn('url undefined!');
             process.exit(1);
         }
+        console.log("url=" + url);
 
         // Set exportname
         var exportname = process.argv[3];
@@ -40,6 +41,7 @@ async function main() {
             console.warn('exportname undefined!');
             process.exit(1);
         }
+        console.log("exportname=" + exportname);
 
         // set duration to 0 
         var duration = 0
@@ -63,7 +65,7 @@ async function main() {
         await page.setBypassCSP(true)
 
         // Check if recording exists (search "404" message)
-        await page.waitForTimeout(5 * 1000)
+        await page.waitForTimeout(5 * 1000);
         try {
             var loadMsg = await page.$eval('.error-code', el => el.textContent);
             console.log(loadMsg)
@@ -72,7 +74,7 @@ async function main() {
                 process.exit(1);
             }
         } catch (err) {
-            console.log("Recording found")
+            console.log("Valid URL!")
         }
 
         /*await page.waitForSelector('button[class=vjs-big-play-button]');
@@ -82,11 +84,13 @@ async function main() {
         await page.$eval('.vjs-control-bar', element => element.style.opacity = "0");
         await page.click('button[class=vjs-big-play-button]', { waitUntil: 'domcontentloaded' });
         */
+        console.log("wait for layout");
         await page.waitForSelector('#conference.mediaview #layout');
+        console.log("wait for closeModal");
         await page.waitForSelector('div[data-test="audioModal"] button[data-test="closeModal"]');
         page.click('div[data-test="audioModal"] button[data-test="closeModal"]');
 
-        //  Start capturing screen with ffmpeg
+        console.log("Start capturing screen with ffmpeg");
         const ls = child_process.spawn('sh', ['ffmpeg-cmd.sh', ' ',
             `${exportname}`, ' ',
             `${disp_num}`
@@ -107,6 +111,7 @@ async function main() {
         });
 
         /*await page.waitFor((duration * 1000))*/
+        console.log("wait for meetingEndedModalTitle");
         await page.waitForSelector('#conference.mediaview h1[data-test="meetingEndedModalTitle"]');
     } catch (err) {
         console.log(err)
