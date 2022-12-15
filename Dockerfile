@@ -46,5 +46,5 @@ ENV MEETING_ID=" "
 
 # Command that will execute when container starts
 ENTRYPOINT ["sh","docker-entrypoint.sh"]
-CMD node /usr/src/app/bbb-mp4.js $REC_URL $MEETING_ID
+CMD node /usr/src/app/bbb-mp4.js $REC_URL $MEETING_ID > /usr/src/app/download/bbb-mp4.log
 
