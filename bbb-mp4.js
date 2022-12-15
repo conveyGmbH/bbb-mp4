@@ -85,7 +85,7 @@ async function main() {
 
         console.log("wait for audioModal/listenOnlyBtn");
         await page.waitForSelector('div[data-test="audioModal"] button[data-test="listenOnlyBtn"]');
-        page.click('div[data-test="audioModal"] button[data-test="microphoneBtn"]');
+        page.click('div[data-test="audioModal"] button[data-test="listenOnlyBtn"]');
 
         console.log("Start capturing screen with ffmpeg");
         const ls = child_process.spawn('sh', ['ffmpeg-cmd.sh', ' ',
