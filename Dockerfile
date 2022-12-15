@@ -40,11 +40,7 @@ RUN mkdir download
 RUN npm install npm@latest -g
 RUN npm install
 
-#Initialize ENV
-ENV REC_URL=" "
-ENV MEETING_ID=" "
-
 # Command that will execute when container starts
 ENTRYPOINT ["sh","docker-entrypoint.sh"]
-CMD node /usr/src/app/bbb-mp4.js $REC_URL $MEETING_ID > /usr/src/app/download/bbb-mp4.log
+CMD node /usr/src/app/bbb-mp4.js $REC_URL $MEETING_ID >> /usr/src/app/download/bbb-mp4.log
 
