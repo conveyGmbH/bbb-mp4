@@ -77,18 +77,11 @@ async function main() {
             console.log("Valid URL!")
         }
 
-        /*await page.waitForSelector('button[class=vjs-big-play-button]');
-        await page.$eval('.bottom-content', element => element.style.display = "none");
-        await page.$eval('.fullscreen-button', element => element.style.opacity = "0");
-        await page.$eval('.right', element => element.style.opacity = "0");
-        await page.$eval('.vjs-control-bar', element => element.style.opacity = "0");
-        await page.click('button[class=vjs-big-play-button]', { waitUntil: 'domcontentloaded' });
-        */
-        console.log("wait for layout");
+        /*console.log("wait for layout");
         await page.waitForSelector('#conference.mediaview #layout');
         console.log("wait for closeModal");
         await page.waitForSelector('div[data-test="audioModal"] button[data-test="closeModal"]');
-        page.click('div[data-test="audioModal"] button[data-test="closeModal"]');
+        page.click('div[data-test="audioModal"] button[data-test="closeModal"]');*/
 
         console.log("Start capturing screen with ffmpeg");
         const ls = child_process.spawn('sh', ['ffmpeg-cmd.sh', ' ',
@@ -110,9 +103,10 @@ async function main() {
             console.log(`child process exited with code ${code}`);
         });
 
-        /*await page.waitFor((duration * 1000))*/
-        console.log("wait for meetingEndedModalTitle");
-        await page.waitForSelector('#conference.mediaview h1[data-test="meetingEndedModalTitle"]');
+        console.log("wait for end");
+        await page.waitFor((20 * 1000));
+        /*
+        await page.waitForSelector('#conference.mediaview h1[data-test="meetingEndedModalTitle"]');*/
     } catch (err) {
         console.log(err)
     } finally {
