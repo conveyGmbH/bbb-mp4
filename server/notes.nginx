@@ -1,0 +1,19 @@
+#Setup upstream for backend Node.js server /bbb-mp4/
+
+upstream bbb-mp4-server {
+    server 127.0.0.1:3101;
+    keepalive 8;
+}
+
+location /bbb-mp4/ {
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme; # for EP to set secure cookie flag when https is used
+    proxy_set_header Host $http_host;
+    proxy_set_header X-NginX-Proxy true;
+
+    proxy_pass http://bbb-mp4-server/;
+    proxy_redirect off;
+    proxy_buffering off;
+    proxy_http_version 1.1;
+}
