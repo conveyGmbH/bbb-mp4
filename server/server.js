@@ -22,7 +22,7 @@ async function main() {
             console.log("url=" + url);
 
             res.writeHead(200, {'Content-Type': 'text/plain'});
-            res.end('Recording scheduled!');
+            res.end('Recording id=' + id + ' scheduled from url=' + url);
         } catch (ex) {
             console.error("exception=" + ex && ex.message);
 
