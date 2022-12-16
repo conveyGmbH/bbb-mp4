@@ -88,14 +88,28 @@ async function main() {
         console.log("wait for layout");
         await page.waitForSelector('#conference.mediaview #layout');
 
+        await page.eval$$('.customer-top-header, .color_container2, .hero-footer', 
+            elements => { 
+                if (elements && elements.length > 0) {
+                    for (var i = 0; i < elements.length; i++) {
+                        var element = elements[i];
+                        if (element && element.style) {
+                            element.style.display = "none";
+                        } 
+                    }
+                }
+            }
+        );
         await page.$$eval('#conference.mediaview #layout > section[aria-label="Actions bar"] button, #conference.mediaview #layout > section[aria-label="Aktionsmenü"] button', 
-            elements => { if (elements.length > 0)
-                for (var i = 0; i < elements.length; i++) {
-                    var element = elements[i];
-                    if (element && element.style) {
-                        element.style.visibility = "hidden";
-                        element.style.width = "0";
-                        element.style.height = "0";
+            elements => { 
+                if (elements && elements.length > 0) {
+                    for (var i = 0; i < elements.length; i++) {
+                        var element = elements[i];
+                        if (element && element.style) {
+                            element.style.visibility = "hidden";
+                            element.style.width = "0";
+                            element.style.height = "0";
+                        }
                     }
                 }
             }
@@ -105,8 +119,7 @@ async function main() {
         await page.waitForSelector('div[data-test="audioModal"] button[data-test="listenOnlyBtn"]');
         page.click('div[data-test="audioModal"] button[data-test="listenOnlyBtn"]');
 
-        await page.waitForTimeout(2 * 1000);
-
+        await page.waitForTimeout(250);
         console.log("Start capturing screen with ffmpeg");
         const ls = child_process.spawn('sh', ['ffmpeg-cmd.sh', ' ',
             `${exportname}`, ' ',
@@ -128,7 +141,6 @@ async function main() {
         });
 
         console.log("wait for meetingEndedModalTitle");
-        /*await page.waitFor((20 * 1000));*/
         var meetingEnd = false;
         while (!meetingEnd) {
             try {
@@ -141,6 +153,7 @@ async function main() {
     } catch (err) {
         console.log(err)
     } finally {
+        await page.waitForTimeout(2 * 1000);
         console.log("close page");
         page.close && await page.close()
         console.log("close browser");
