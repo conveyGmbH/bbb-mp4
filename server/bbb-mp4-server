@@ -1,6 +1,0 @@
-#Setup upstream for backend Node.js server /bbb-mp4/
-
-upstream bbbmp4server {
-    server 127.0.0.1:3101;
-    keepalive 8;
-}
