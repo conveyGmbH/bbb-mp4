@@ -110,6 +110,11 @@ async function main() {
                         var element = elements[i];
                         if (element && element.style) {
                             element.style.display = "none !important";
+                            if (element.firstElementChild && element.firstElementChild.style) {
+                                element.firstElementChild.style.visibility = "hidden !important";
+                                element.firstElementChild.style.width = "0 !important";
+                                element.firstElementChild.style.height = "0 !important";
+                            }
                         } 
                     }
                 }
