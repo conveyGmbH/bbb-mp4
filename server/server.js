@@ -1,4 +1,5 @@
 const http = require('http');
+const url = require('url');
 //const child_process = require('child_process');
 
 async function main() {
@@ -8,19 +9,19 @@ async function main() {
         try {
             console.log("Start Request");
 
-            var query = req && (req.query || req.params);
+            const query = url.parse(req.url, true).query;
             if (!query) {
                 throw new Error('query undefined!');
             }
 
-            var meetingId = query.meetingId;
+            const meetingId = query.meetingId;
             if (!meetingId) {
                 throw new Error('meetingId undefined!');
             }
             console.log("meetingId=" + meetingId);
 
             // Set exportname
-            var recUrl = query.recUrl;
+            const recUrl = query.recUrl;
             if (!recUrl) {
                 throw new Error('recUrl undefined!');
             }
