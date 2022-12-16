@@ -101,10 +101,11 @@ async function main() {
                 }
             }
         );
-        await page.$$eval('#conference.mediaview #layout > section .action-button-container, #conference.mediaview #layout > section .emoji-button-container', 
+        await page.waitForSelector('#conference.mediaview #layout > section[role="region"] .action-button-container, #conference.mediaview #layout > section[role="region"] .emoji-button-container');
+        await page.$$eval('#conference.mediaview #layout > section[role="region"] .action-button-container, #conference.mediaview #layout > section[role="region"] .emoji-button-container', 
             elements => { 
                 if (elements && elements.length > 0) {
-                    console.log(elements.length + " bottons found!");
+                    console.log(elements.length + " buttons found!");
                     for (var i = 0; i < elements.length; i++) {
                         var element = elements[i];
                         if (element && element.style) {
