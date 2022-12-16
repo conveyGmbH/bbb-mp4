@@ -88,28 +88,15 @@ async function main() {
         console.log("wait for layout");
         await page.waitForSelector('#conference.mediaview #layout');
 
-        await page.$$eval('.customer-top-header, .content-grid, .hero-footer', 
+        await page.$$eval('.customer-top-header, .content-grid, .hero-footer, .action-button-container, .emoji-button-container', 
             elements => { 
                 if (elements && elements.length > 0) {
+                    console.log(elements.length + "header / footer found!");
                     for (var i = 0; i < elements.length; i++) {
                         var element = elements[i];
                         if (element && element.style) {
-                            element.style.display = "none";
+                            element.style.display = "none !important";
                         } 
-                    }
-                }
-            }
-        );
-        await page.$$eval('#conference.mediaview #layout > section[aria-label="Actions bar"] button, #conference.mediaview #layout > section[aria-label="Aktionsmenü"] button', 
-            elements => { 
-                if (elements && elements.length > 0) {
-                    for (var i = 0; i < elements.length; i++) {
-                        var element = elements[i];
-                        if (element && element.style) {
-                            element.style.visibility = "hidden";
-                            element.style.width = "0";
-                            element.style.height = "0";
-                        }
                     }
                 }
             }
