@@ -10,11 +10,13 @@ async function main() {
 
             var query = req && (req.query || req.params);
             if (!query) {
+                console.log('query undefined!');
                 throw ('query undefined!');
             }
 
             var meetingId = query.meetingId;
             if (!meetingId) {
+                console.log('meetingId undefined!');
                 throw ('meetingId undefined!');
             }
             console.log("meetingId=" + meetingId);
@@ -22,6 +24,7 @@ async function main() {
             // Set exportname
             var recUrl = query.recUrl;
             if (!recUrl) {
+                console.log('recUrl undefined!');
                 throw('recUrl undefined!');
             }
             console.log("recUrl=" + recUrl);
