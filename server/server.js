@@ -6,7 +6,7 @@ async function main() {
 
     http.createServer(function (req, res) {
         try {
-            console.log("Start Request");
+            console.log("Start Request req=" + JSON.stringify(req));
 
             var meetingId = req && req.meetingId;
             if (!meetingId) {
