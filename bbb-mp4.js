@@ -91,21 +91,7 @@ async function main() {
         await page.$eval('.customer-top-header', element => element.style.display = "none");
         await page.$eval('.content-grid', element => element.style.display = "none");
         await page.$eval('.hero-footer', element => element.style.display = "none");
-
-        await page.waitForSelector('#conference.mediaview #layout > section[role="region"] .action-button-container, #conference.mediaview #layout > section[role="region"] .emoji-button-container');
-        await page.$$eval('.action-button-container, .emoji-button-container', 
-            elements => { 
-                if (elements && elements.length > 0) {
-                    console.log(elements.length + " buttons found!");
-                    for (var i = 0; i < elements.length; i++) {
-                        var element = elements[i];
-                        if (element && element.style) {
-                            element.style.display = "none !important";
-                        } 
-                    }
-                }
-            }
-        );
+        await page.$eval('#conference.mediaview #layout > section[role="region"] ', element => element.style.display = "none");
 
         console.log("wait for audioModal/listenOnlyBtn");
         await page.waitForSelector('div[data-test="audioModal"] button[data-test="listenOnlyBtn"]');
