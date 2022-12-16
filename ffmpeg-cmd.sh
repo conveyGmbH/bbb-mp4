@@ -10,7 +10,7 @@ ffmpeg -y -nostats -draw_mouse 0 -s 1920x1080 \
 	-f alsa -thread_queue_size 1024 \
 	-itsoffset 1.23 \
 	-i pulse -ac 2 \
-	-b:a 128k -b:v 1500k \
+	-b:a 128k -b:v 2500k \
 	-c:v libx264 -c:a aac  \
 	-crf 22  \
 	-pix_fmt yuv420p \
