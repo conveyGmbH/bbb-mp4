@@ -8,7 +8,7 @@ ffmpeg -y -nostats -draw_mouse 0 -s 1920x1080 \
 	-f x11grab -thread_queue_size 1024 \
 	-i :$DISPLAY_NUMBER \
 	-f alsa -thread_queue_size 1024 \
-	-itsoffset 1.27 \
+	-itsoffset 1.25 \
 	-i pulse -ac 2 \
 	-c:v libx264 -c:a aac  \
 	-crf 22  \
