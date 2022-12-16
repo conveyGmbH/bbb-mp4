@@ -88,7 +88,7 @@ async function main() {
         console.log("wait for layout");
         await page.waitForSelector('#conference.mediaview #layout');
 
-        await page.$$eval('.customer-top-header, .color_container2, .hero-footer', 
+        await page.$$eval('.customer-top-header, .content-grid, .hero-footer', 
             elements => { 
                 if (elements && elements.length > 0) {
                     for (var i = 0; i < elements.length; i++) {
