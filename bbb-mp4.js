@@ -88,10 +88,23 @@ async function main() {
         console.log("wait for layout");
         await page.waitForSelector('#conference.mediaview #layout');
 
-        await page.$$eval('.customer-top-header, .content-grid, .hero-footer, .action-button-container, .emoji-button-container', 
+        await page.$$eval('.customer-top-header, .content-grid, .hero-footer', 
             elements => { 
                 if (elements && elements.length > 0) {
-                    console.log(elements.length + "header / footer found!");
+                    console.log(elements.length + " header / footer found!");
+                    for (var i = 0; i < elements.length; i++) {
+                        var element = elements[i];
+                        if (element && element.style) {
+                            element.style.display = "none !important";
+                        } 
+                    }
+                }
+            }
+        );
+        await page.$$eval('#conference.mediaview #layout > section .action-button-container, #conference.mediaview #layout > section .emoji-button-container', 
+            elements => { 
+                if (elements && elements.length > 0) {
+                    console.log(elements.length + " bottons found!");
                     for (var i = 0; i < elements.length; i++) {
                         var element = elements[i];
                         if (element && element.style) {
