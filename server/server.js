@@ -8,21 +8,21 @@ async function main() {
         try {
             console.log("Start Request");
 
-            var id = process.argv[2];
-            if (!id) {
+            var meetingId = req && req.meetingId;
+            if (!meetingId) {
                 throw ('meetingId undefined!')
             }
-            console.log("id=" + id);
+            console.log("meetingId=" + meetingId);
 
             // Set exportname
-            var url = process.argv[3];
-            if (!url) {
-                throw('url undefined!');
+            var recUrl = req && req.recUrl;
+            if (!recUrl) {
+                throw('recUrl undefined!');
             }
-            console.log("url=" + url);
+            console.log("recUrl=" + recUrl);
 
             res.writeHead(200, {'Content-Type': 'text/plain'});
-            res.end('Recording id=' + id + ' scheduled from url=' + url);
+            res.end('Recording meetingId=' + meetingId + ' scheduled from recUrl=' + recUrl);
         } catch (ex) {
             console.error("exception=" + ex && ex.message);
 
