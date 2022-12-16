@@ -1,6 +1,6 @@
 const http = require('http');
 const url = require('url');
-//const child_process = require('child_process');
+const child_process = require('child_process');
 
 async function main() {
     const port = 3101;
@@ -27,10 +27,30 @@ async function main() {
             }
             console.log("recUrl=" + recUrl);
 
+            console.log("Start bbb-mp4");
+            const ls = child_process.spawn('sh', ['../bbb-mp4.sh', ' ',
+                `${meetingId}`, ' ',
+                `${recUrl}`
+            ], {
+                shell: true
+            });
+
+            ls.stdout.on('data', (data) => {
+                console.log(`stdout: ${data}`);
+            });
+
+            ls.stderr.on('data', (data) => {
+                console.error(`stderr: ${data}`);
+            });
+
+            ls.on('close', (code) => {
+                console.log(`child process exited with code ${code}`);
+            });
+
             res.writeHead(200, {'Content-Type': 'text/plain'});
-            res.end('Recording meetingId=' + meetingId + ' scheduled from recUrl=' + recUrl);
+            res.end('Recording scheduled meetingId=' + meetingId + ' scheduled from recUrl=' + recUrl);
         } catch (ex) {
-            console.log("exception=" + ex && ex.message);
+            console.error("exception=" + ex && ex.message);
 
             res.writeHead(400, {'Content-Type': 'text/plain'});
             res.end(ex && ex.message);
