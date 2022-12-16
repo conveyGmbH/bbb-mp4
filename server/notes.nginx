@@ -1,9 +1,4 @@
-#Setup upstream for backend Node.js server /bbb-mp4/
-
-upstream bbb-mp4-server {
-    server 127.0.0.1:3101;
-    keepalive 8;
-}
+#The Nginx virtual directory location
 
 location /bbb-mp4/ {
     proxy_set_header X-Real-IP $remote_addr;
