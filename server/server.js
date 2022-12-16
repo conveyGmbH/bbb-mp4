@@ -6,16 +6,21 @@ async function main() {
 
     http.createServer(function (req, res) {
         try {
-            console.log("Start Request req=" + JSON.stringify(req));
+            console.log("Start Request");
 
-            var meetingId = req && req.meetingId;
+            var query = req.query;
+            if (!query) {
+                throw ('query undefined!')
+            }
+
+            var meetingId = req && req.query.meetingId;
             if (!meetingId) {
                 throw ('meetingId undefined!')
             }
             console.log("meetingId=" + meetingId);
 
             // Set exportname
-            var recUrl = req && req.recUrl;
+            var recUrl = req && req.query.recUrl;
             if (!recUrl) {
                 throw('recUrl undefined!');
             }
