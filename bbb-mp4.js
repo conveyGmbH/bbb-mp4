@@ -159,7 +159,7 @@ async function main() {
     } catch (err) {
         console.log(err)
     } finally {
-        await page.waitForTimeout(2 * 1000);
+        await page.waitForTimeout(5 * 1000);
         console.log("close page");
         page.close && await page.close()
         console.log("close browser");
