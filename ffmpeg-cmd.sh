@@ -5,9 +5,10 @@ DISPLAY_NUMBER=$2
 #Record the BBB playback, playing in Google browser in xvfb virtual screen, as MP4 video
 ffmpeg -y -nostats -draw_mouse 0 -s 1920x1080 \
 	-framerate 30 \
-	-f x11grab -thread_queue_size 1024 \
+	-f x11grab -thread_queue_size 8192 \
 	-i :$DISPLAY_NUMBER \
-	-f alsa -thread_queue_size 1024 \
+	-b 2500k -minrate 0 -maxrate 3000k \
+	-f alsa -thread_queue_size 8192 \
 	-itsoffset 1.23 \
 	-i pulse -ac 2 \
 	-c:v libx264 -c:a aac  \
