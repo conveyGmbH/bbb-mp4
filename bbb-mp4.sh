@@ -11,5 +11,5 @@ sudo docker run --rm -d \
                 -v $COPY_TO_LOCATION:/usr/src/app/download \
                 --env MEETING_ID=$1 \
                 --env REC_URL=$2 \
-                manishkatyan/bbb-mp4
+                conveygmbh/bbb-mp4
 
