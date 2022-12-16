@@ -24,7 +24,7 @@ async function main() {
             res.writeHead(200, {'Content-Type': 'text/plain'});
             res.end('Recording meetingId=' + meetingId + ' scheduled from recUrl=' + recUrl);
         } catch (ex) {
-            console.error("exception=" + ex && ex.message);
+            console.log("exception=" + ex && ex.message);
 
             res.writeHead(400, {'Content-Type': 'text/plain'});
             res.end(ex && ex.message);
