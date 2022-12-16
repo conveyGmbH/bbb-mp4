@@ -88,21 +88,12 @@ async function main() {
         console.log("wait for layout");
         await page.waitForSelector('#conference.mediaview #layout');
 
-        await page.$$eval('.customer-top-header, .content-grid, .hero-footer', 
-            elements => { 
-                if (elements && elements.length > 0) {
-                    console.log(elements.length + " header / footer found!");
-                    for (var i = 0; i < elements.length; i++) {
-                        var element = elements[i];
-                        if (element && element.style) {
-                            element.style.display = "none !important";
-                        } 
-                    }
-                }
-            }
-        );
+        await page.$eval('.customer-top-header', element => element.style.display = "none");
+        await page.$eval('.content-grid', element => element.style.display = "none");
+        await page.$eval('.hero-footer', element => element.style.display = "none");
+
         await page.waitForSelector('#conference.mediaview #layout > section[role="region"] .action-button-container, #conference.mediaview #layout > section[role="region"] .emoji-button-container');
-        await page.$$eval('#conference.mediaview #layout > section[role="region"] .action-button-container, #conference.mediaview #layout > section[role="region"] .emoji-button-container', 
+        await page.$$eval('.action-button-container, .emoji-button-container', 
             elements => { 
                 if (elements && elements.length > 0) {
                     console.log(elements.length + " buttons found!");
@@ -110,11 +101,6 @@ async function main() {
                         var element = elements[i];
                         if (element && element.style) {
                             element.style.display = "none !important";
-                            if (element.firstElementChild && element.firstElementChild.style) {
-                                element.firstElementChild.style.visibility = "hidden !important";
-                                element.firstElementChild.style.width = "0 !important";
-                                element.firstElementChild.style.height = "0 !important";
-                            }
                         } 
                     }
                 }
