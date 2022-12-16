@@ -12,3 +12,4 @@ sudo docker run --rm -d \
                 --env MEETING_ID=$1 \
                 --env REC_URL=$2 \
                 manishkatyan/bbb-mp4
+

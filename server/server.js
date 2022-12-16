@@ -28,7 +28,7 @@ async function main() {
             console.log("recUrl=" + recUrl);
 
             console.log("Start bbb-mp4");
-            const ls = child_process.spawn('sh', ['../bbb-mp4.sh', ' ',
+            const ls = child_process.spawn('sh', ['bbb-mp4.sh', ' ',
                 `${meetingId}`, ' ',
                 `${recUrl}`
             ], {
