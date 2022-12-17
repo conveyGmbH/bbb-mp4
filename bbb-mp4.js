@@ -17,8 +17,6 @@ var options = {
         '--no-sandbox',
         '--enable-logging',
         '--disable-infobar',
-        '--excludeSwitches',
-        '--useAutomationExtension',
         '--disable-dev-shm-usage',
         '--disable-setuid-sandbox',
         '--start-fullscreen',
@@ -26,7 +24,7 @@ var options = {
         '--window-position=0,0',
         `--window-size=${width},${height}`
     ],
-    excludeSwitches: 'enable-automation',
+    ignoreDefaultArgs: ['--enable-automation', '--useAutomationExtension'],
     defaultViewport: null,
 }
 options.executablePath = "/usr/bin/google-chrome"
