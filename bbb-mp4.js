@@ -17,6 +17,7 @@ var options = {
         '--test-type',
         '--disable-infobar',
         '--no-sandbox',
+        '--disable-setuid-sandbox',
         '--enable-logging',
         '--disable-dev-shm-usage',
         '--start-fullscreen',
