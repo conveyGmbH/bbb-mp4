@@ -18,7 +18,6 @@ var options = {
         '--enable-logging',
         '--disable-infobar',
         '--disable-dev-shm-usage',
-        '--disable-setuid-sandbox',
         '--start-fullscreen',
         '--app=https://www.google.com/',
         '--window-position=0,0',
