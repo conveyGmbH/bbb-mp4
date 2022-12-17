@@ -25,6 +25,9 @@ RUN apt-get -y update && apt-get -y install libgbm-dev ffmpeg gconf-service liba
                                         lsb-release xdg-utils wget xvfb fonts-noto \
                                         dbus-x11 libasound2 fluxbox  libasound2-plugins alsa-utils  alsa-oss pulseaudio pulseaudio-utils
 
+# Install Emoji font
+RUN pacman -S noto-fonts-emoji --needed
+
 # Install Node.js
 RUN curl -sL https://deb.nodesource.com/setup_14.x | bash
 RUN apt-get install --yes nodejs
