@@ -14,8 +14,9 @@ var height = 1080;
 var options = {
     headless: false,
     args: [
-        '--enable-logging',
         '--disable-infobar',
+        '--no-sandbox',
+        '--enable-logging',
         '--disable-dev-shm-usage',
         '--start-fullscreen',
         '--app=https://www.google.com/',
