@@ -14,6 +14,7 @@ var height = 1080;
 var options = {
     headless: false,
     args: [
+        '--test-type',
         '--disable-infobar',
         '--no-sandbox',
         '--enable-logging',
