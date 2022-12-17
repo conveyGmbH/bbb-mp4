@@ -14,7 +14,6 @@ var height = 1080;
 var options = {
     headless: false,
     args: [
-        '--no-sandbox',
         '--enable-logging',
         '--disable-infobar',
         '--disable-dev-shm-usage',
