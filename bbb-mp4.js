@@ -141,8 +141,8 @@ async function main() {
         console.log("stopSync");
         xvfb.stopSync();
         if (ls) {
-            console.log("kill sync ffmpeg job pid=" + ls.pid);
-            kill(ls.pid);
+            //console.log("kill sync ffmpeg job pid=" + ls.pid);
+            //kill(ls.pid);
             console.log("now start transcoding");
             const ls_out_cmd = [
                 'ffmpeg-out-1920-mp4.sh', 
