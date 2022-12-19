@@ -137,11 +137,13 @@ async function main() {
         console.log("close browser");
         browser.close && await browser.close()
         // Stop xvfb after browser close
-        console.log("stopSync ");
+        console.log("stopSync");
         xvfb.stopSync();
         await page.waitForTimeout(5 * 1000);
         if (ls) {
-            ls.kill('SIGKILL');
+            console.log("close ffmpeg-cmd");
+            await ls.kill(0);
+            console.log("ffmpeg-cmd closed");
         }
         const ls_out_cmd = [
             'ffmpeg-out-1920-mp4.sh', 
@@ -179,6 +181,7 @@ async function main() {
             setShCmdHandler(ls_out[i], i);
         }
         await Promise.all(promises);
+        await page.waitForTimeout(5 * 1000);
         process.exit(0);
     }
 }
