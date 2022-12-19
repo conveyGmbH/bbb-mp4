@@ -5,6 +5,7 @@ EXPORT_NAME=$1
 ffmpeg -y \
 	-i /usr/src/app/download/$EXPORT_NAME.mp4 \
 	-c:v libx264 \
-	-preset fast \
+	-preset slow \
+	-crf 30 \
 	-movflags faststart \
 	/usr/src/app/download/$EXPORT_NAME-1920.mp4
