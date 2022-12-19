@@ -140,13 +140,17 @@ async function main() {
         ];
         for (var i = 0; i < ls_out_cmd.length; i++) {
             console.log("call " + ls_out_cmd[i]);
-            child_process.spawn('sh', [ls_out_cmd[i], ' ',
-                `${exportname}`
-            ], {
-                detached: true,
-                stdio: 'ignore',
-                shell: true
-            })
+            var subprocess = child_process.spawn('sh',
+                [
+                    ls_out_cmd[i], ' ',
+                    `${exportname}`
+                ],
+                {
+                    detached: true,
+                    stdio: 'ignore',
+                    shell: true
+                });
+            subprocess.unref();
         }
         await page.waitForTimeout(15 * 1000);
         console.log("bbb-mp4 - end");
