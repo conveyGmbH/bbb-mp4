@@ -103,9 +103,9 @@ async function main() {
         ls = child_process.spawn('sh', ['ffmpeg-cmd.sh', ' ',
             `${exportname}`, ' ',
             `${disp_num}`
-        ]/*, {
+        ], {
             shell: true
-        }*/);
+        });
 
         ls.stdout.on('data', (data) => {
             console.log(`ffmpeg-cmd stdout: ${data}`);
@@ -151,10 +151,11 @@ async function main() {
                 `${exportname}`
             ], {
                 detached: true,
-                stdio: 'ignore'
+                stdio: 'ignore',
+                shell: true
             })
         }
-        await page.waitForTimeout(5 * 1000);
+        await page.waitForTimeout(15 * 1000);
         console.log("bbb-mp4 - end");
         process.exit(0);
     }
