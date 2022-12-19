@@ -183,7 +183,7 @@ async function main() {
             await Promise.all(promises);
             //await page.waitForTimeout(5 * 1000);
         }
-        //console.log("bbb-mp4 - end");
+        console.log("bbb-mp4 - end");
         //process.exit(0);
     }
 }
