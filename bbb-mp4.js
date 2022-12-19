@@ -109,6 +109,14 @@ async function main() {
             shell: true
         });
 
+        ls.stdout.on('data', (data) => {
+            console.log(`ffmpeg-cmd stdout: ${data}`);
+        });
+
+        ls.stderr.on('data', (data) => {
+            console.error(`ffmpeg-cmd stderr: ${data}`);
+        });
+
         ls.on('close', (code) => {
             console.log(`ffmpeg-cmd child process exited with code ${code}`);
         });
@@ -141,17 +149,38 @@ async function main() {
                 'ffmpeg-out-1920-mp4.sh', 
                 'ffmpeg-out-1920-webm.sh'
             ];
+            var ls_out = [];
+            var promises = [];
+            var promiseFromChildProcess = function(child) {
+                return new Promise(function (resolve, reject) {
+                    child.addListener("error", reject);
+                    child.addListener("exit", resolve);
+                });
+            }
+            var setShCmdHandler = function(child, index) {
+                child.stdout.on('data', (data) => {
+                    console.log(ls_out_cmd[index] + ` stdout: ${data}`);
+                });
+                child.stderr.on('data', (data) => {
+                    console.error(ls_out_cmd[index] + ` stderr: ${data}`);
+                });
+                child.on('close', (code) => {
+                    console.log(ls_out_cmd[index] + ` child process exited with code ${code}`);
+                });
+                promises[index] = promiseFromChildProcess(child);
+            }            
             for (var i = 0; i < ls_out_cmd.length; i++) {
                 console.log("call " + ls_out_cmd[i]);
                 child_process.spawn('sh', [
                     ls_out_cmd[i], ' ',
                     `${exportname}`
                 ], {
-                    stdio: 'ignore',
                     shell: true
                 });
+                setShCmdHandler(ls_out[i], i);
             }
-            await page.waitForTimeout(15 * 1000);
+            await Promise.all(promises);
+            await page.waitForTimeout(5 * 1000);
         }
         console.log("bbb-mp4 - end");
         process.exit(0);
