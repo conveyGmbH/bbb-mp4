@@ -30,6 +30,7 @@ var options = {
 }
 options.executablePath = "/usr/bin/google-chrome"
 async function main() {
+    console.log("bbb-mp4 - start");
     const ls = null;
     let browser, page;
     try {
@@ -182,6 +183,7 @@ async function main() {
         }
         await Promise.all(promises);
         await page.waitForTimeout(5 * 1000);
+        console.log("bbb-mp4 - end");
         process.exit(0);
     }
 }
