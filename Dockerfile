@@ -42,6 +42,7 @@ RUN mkdir download
 #Install npm scripts
 RUN npm install npm@latest -g
 RUN npm install
+RUN npm install tree-kill
 
 # Command that will execute when container starts
 ENTRYPOINT ["sh","/usr/src/app/docker-entrypoint.sh"]
