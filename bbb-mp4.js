@@ -104,15 +104,8 @@ async function main() {
             `${exportname}`, ' ',
             `${disp_num}`
         ], {
+            stdio: 'ignore',
             shell: true
-        });
-
-        ls.stdout.on('data', (data) => {
-            console.log(`ffmpeg-cmd stdout: ${data}`);
-        });
-
-        ls.stderr.on('data', (data) => {
-            console.error(`ffmpeg-cmd stderr: ${data}`);
         });
 
         ls.on('close', (code) => {

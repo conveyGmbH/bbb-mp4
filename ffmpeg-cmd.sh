@@ -16,4 +16,4 @@ ffmpeg -y -nostats -draw_mouse 0 -s 1920x1080 \
 	-pix_fmt yuv420p \
 	-preset fast \
 	-movflags frag_keyframe+separate_moof+omit_tfhd_offset+empty_moov \
-	/usr/src/app/download/$EXPORT_NAME.mp4
+	/usr/src/app/download/$EXPORT_NAME.mp4 >> /usr/src/app/download/bbb-mp4.log

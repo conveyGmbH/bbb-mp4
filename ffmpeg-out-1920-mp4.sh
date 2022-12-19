@@ -8,4 +8,4 @@ ffmpeg -y \
 	-preset slow \
 	-crf 30 \
 	-movflags faststart \
-	/usr/src/app/download/$EXPORT_NAME-1920.mp4
+	/usr/src/app/download/$EXPORT_NAME-1920.mp4 >> /usr/src/app/download/bbb-mp4.log
