@@ -2,6 +2,7 @@
 EXPORT_NAME=$1
 
 #Output as MP4 video
+echo "encoding $EXPORT_NAME-1920.mp4 started" >> /usr/src/app/download/bbb-mp4.log
 ffmpeg -y \
 	-i /usr/src/app/download/$EXPORT_NAME.mp4 \
 	-c:v libx264 \
@@ -9,3 +10,4 @@ ffmpeg -y \
 	-crf 30 \
 	-movflags faststart \
 	/usr/src/app/download/$EXPORT_NAME-1920.mp4 >> /usr/src/app/download/bbb-mp4.log
+echo "encoding $EXPORT_NAME-1920.mp4 finished" >> /usr/src/app/download/bbb-mp4.log
