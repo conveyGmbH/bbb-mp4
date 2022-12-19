@@ -30,6 +30,7 @@ var options = {
 }
 options.executablePath = "/usr/bin/google-chrome"
 async function main() {
+    const ls = null;
     let browser, page;
     try {
         console.log("startSync");
@@ -98,7 +99,7 @@ async function main() {
 
         await page.waitForTimeout(250);
         console.log("Start capturing screen with ffmpeg");
-        const ls = child_process.spawn('sh', ['ffmpeg-cmd.sh', ' ',
+        ls = child_process.spawn('sh', ['ffmpeg-cmd.sh', ' ',
             `${exportname}`, ' ',
             `${disp_num}`
         ], {
@@ -139,7 +140,9 @@ async function main() {
         console.log("stopSync ");
         xvfb.stopSync();
         await page.waitForTimeout(5 * 1000);
-        ls.close();
+        if (ls) {
+            ls.close();
+        }
         const ls_out_cmd = [
             'ffmpeg-out-1920-mp4.sh', 
             'ffmpeg-out-1920-webm.sh'
