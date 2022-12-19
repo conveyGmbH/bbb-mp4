@@ -3,7 +3,7 @@ EXPORT_NAME=$1
 
 #Output as MP4 video
 echo "encoding $EXPORT_NAME-1920.mp4 started" >> /usr/src/app/download/bbb-mp4.log
-mkdir /usr/src/app/download/$EXPORT_NAME;
+mkdir /usr/src/app/download/$EXPORT_NAME
 cd /usr/src/app/download/$EXPORT_NAME
 ffmpeg -y \
 	-i ..\$EXPORT_NAME.mp4 \
