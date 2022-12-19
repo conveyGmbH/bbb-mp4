@@ -107,15 +107,15 @@ async function main() {
         });
 
         ls.stdout.on('data', (data) => {
-            console.log(`stdout: ${data}`);
+            console.log(`ffmpeg-cmd stdout: ${data}`);
         });
 
         ls.stderr.on('data', (data) => {
-            console.error(`stderr: ${data}`);
+            console.error(`ffmpeg-cmd stderr: ${data}`);
         });
 
         ls.on('close', (code) => {
-            console.log(`child process exited with code ${code}`);
+            console.log(`ffmpeg-cmd child process exited with code ${code}`);
         });
 
         console.log("wait for meetingEndedModalTitle");
@@ -141,7 +141,7 @@ async function main() {
         xvfb.stopSync();
         await page.waitForTimeout(5 * 1000);
         if (ls) {
-            ls.kill();
+            ls.kill('SIGKILL');
         }
         const ls_out_cmd = [
             'ffmpeg-out-1920-mp4.sh', 
