@@ -7,4 +7,4 @@ ffmpeg -y \
 	-c:v libx264 \
 	-preset fast \
 	-movflags faststart \
-	/usr/src/app/download/$EXPORT_NAME-1920.mp4 &
+	/usr/src/app/download/$EXPORT_NAME-1920.mp4

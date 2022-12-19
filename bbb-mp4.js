@@ -139,6 +139,7 @@ async function main() {
         console.log("stopSync ");
         xvfb.stopSync();
         await page.waitForTimeout(5 * 1000);
+        ls.close();
         const ls_out_cmd = [
             'ffmpeg-out-1920-mp4.sh', 
             'ffmpeg-out-1920-webm.sh'

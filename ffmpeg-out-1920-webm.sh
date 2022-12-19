@@ -8,4 +8,4 @@ ffmpeg -y\
 ffmpeg -y \
        -i /usr/src/app/download/$EXPORT_NAME.mp4 \
        -c:v libvpx-vp9 -b:v 0 -crf 30 -pass 2 -c:a libopus \
-       /usr/src/app/download/$EXPORT_NAME-1920.webm &
+       /usr/src/app/download/$EXPORT_NAME-1920.webm
