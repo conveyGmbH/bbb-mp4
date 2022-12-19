@@ -137,13 +137,12 @@ async function main() {
         page.close && await page.close()
         console.log("close browser");
         browser.close && await browser.close()
-        if (ls) {
-            console.log("close ffmpeg-cmd");
-            await ls.kill(0);
-        }
         // Stop xvfb after browser close
         console.log("stopSync");
         xvfb.stopSync();
+        console.log("wait a while...");
+        await page.waitForTimeout(60 * 1000);
+        console.log("now start transcoding");
         const ls_out_cmd = [
             'ffmpeg-out-1920-mp4.sh', 
             'ffmpeg-out-1920-webm.sh'
