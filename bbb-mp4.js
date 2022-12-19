@@ -132,7 +132,7 @@ async function main() {
     } catch (err) {
         console.log(err)
     } finally {
-        await page.waitForTimeout(5 * 1000);
+        await page.waitForTimeout(2 * 1000);
         console.log("close page");
         page.close && await page.close()
         console.log("close browser");
@@ -183,10 +183,8 @@ async function main() {
                 setShCmdHandler(ls_out[i], i);
             }
             await Promise.all(promises);
-            //await page.waitForTimeout(5 * 1000);
         }
         console.log("bbb-mp4 - end");
-        //process.exit(0);
     }
 }
 
