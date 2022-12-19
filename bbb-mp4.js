@@ -146,7 +146,9 @@ async function main() {
             console.log("now start transcoding");
             const ls_out_cmd = [
                 'ffmpeg-out-1920-mp4.sh', 
-                'ffmpeg-out-1920-webm.sh'
+                'ffmpeg-out-1920-webm.sh',
+                'ffmpeg-out-1280-mp4.sh', 
+                'ffmpeg-out-1280-webm.sh'
             ];
             var ls_out = [];
             var promises = [];
