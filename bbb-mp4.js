@@ -147,7 +147,7 @@ async function main() {
                 ],
                 {
                     detached: true,
-                    stdio: 'ignore',
+                    stdio: ['ignore', 'ignore', 'ignore'],
                     shell: true
                 });
             subprocess.unref();
