@@ -105,7 +105,6 @@ async function main() {
             `${exportname}`, ' ',
             `${disp_num}`
         ], {
-            stdio: 'ignore',
             shell: true
         });
 
