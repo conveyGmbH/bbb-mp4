@@ -1,5 +1,5 @@
 const puppeteer = require('puppeteer');
-//const kill  = require('tree-kill');
+const kill  = require('tree-kill');
 const child_process = require('child_process');
 const Xvfb = require('xvfb');
 
