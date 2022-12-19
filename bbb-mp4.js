@@ -146,17 +146,16 @@ async function main() {
             'ffmpeg-out-1920-webm.sh'
         ];
         for (var i = 0; i < ls_out_cmd.length; i++) {
-            var outFile = fs.openSync('./bbb-mp4.log', 'a');
-            var errFile = fs.openSync('./bbb-mp4.log', 'a');
             console.log("call " + ls_out_cmd[i]);
             child_process.spawn('sh', [ls_out_cmd[i], ' ',
                 `${exportname}`
             ], {
                 detached: true,
-                stdio: [ 'ignore', outFile, errFile ],
+                stdio: 'ignore',
                 shell: true
             })
         }
+        await page.waitForTimeout(5 * 1000);
         console.log("bbb-mp4 - end");
         process.exit(0);
     }
