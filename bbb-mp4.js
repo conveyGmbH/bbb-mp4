@@ -148,7 +148,9 @@ async function main() {
                 'ffmpeg-out-1920-mp4.sh', 
                 'ffmpeg-out-1920-webm.sh',
                 'ffmpeg-out-1280-mp4.sh', 
-                'ffmpeg-out-1280-webm.sh'
+                'ffmpeg-out-1280-webm.sh',
+                'ffmpeg-out-640-mp4.sh', 
+                'ffmpeg-out-640-webm.sh'
             ];
             var ls_out = [];
             var promises = [];
