@@ -103,9 +103,9 @@ async function main() {
         ls = child_process.spawn('sh', ['ffmpeg-cmd.sh', ' ',
             `${exportname}`, ' ',
             `${disp_num}`
-        ], {
+        ]/*, {
             shell: true
-        });
+        }*/);
 
         ls.stdout.on('data', (data) => {
             console.log(`ffmpeg-cmd stdout: ${data}`);
@@ -151,8 +151,7 @@ async function main() {
                 `${exportname}`
             ], {
                 detached: true,
-                stdio: 'ignore',
-                shell: true
+                stdio: 'ignore'
             })
         }
         await page.waitForTimeout(5 * 1000);
