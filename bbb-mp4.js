@@ -181,10 +181,10 @@ async function main() {
                 setShCmdHandler(ls_out[i], i);
             }
             await Promise.all(promises);
-            await page.waitForTimeout(5 * 1000);
+            //await page.waitForTimeout(5 * 1000);
         }
-        console.log("bbb-mp4 - end");
-        process.exit(0);
+        //console.log("bbb-mp4 - end");
+        //process.exit(0);
     }
 }
 
