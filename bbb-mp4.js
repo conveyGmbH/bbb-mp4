@@ -137,7 +137,43 @@ async function main() {
         browser.close && await browser.close()
         // Stop xvfb after browser close
         console.log("stopSync ");
-        xvfb.stopSync()
+        xvfb.stopSync();
+        const ls_out_cmd = [
+            'ffmpeg-out-1920-mp4.sh', 
+            'ffmpeg-out-1920-webm.sh'
+        ];
+        var ls_out_finished = [];
+        var ls_out = [];
+        var promises = [];
+        var promiseFromChildProcess = function(child) {
+            return new Promise(function (resolve, reject) {
+                child.addListener("error", reject);
+                child.addListener("exit", resolve);
+            });
+        }
+        var setShCmdHandler = function(ls, i) {
+            ls.stdout.on('data', (data) => {
+                console.log(ls_out_cmd[i] + ` stdout: ${data}`);
+            });
+            ls.stderr.on('data', (data) => {
+                console.error(ls_out_cmd[i] + ` stderr: ${data}`);
+            });
+            ls.on('close', (code) => {
+                console.log(ls_out_cmd[i] + ` child process exited with code ${code}`);
+            });
+            promises[i] = promiseFromChildProcess(ls);
+        }
+        for (var i = 0; i < ls_out_cmd.length; i++) {
+            console.log("call " + ls_out_cmd[i]);
+            ls_out_finished[i] = false;
+            ls_out[i] = child_process.spawn('sh', [ls_out_cmd[i], ' ',
+                `${exportname}`
+            ], {
+                shell: true
+            })
+            setShCmdHandler(ls_out[i], i);
+        }
+        await Promise.all(promises);
         process.exit(0);
     }
 }
