@@ -142,6 +142,10 @@ async function main() {
         xvfb.stopSync();
         console.log("wait a while...");
         await page.waitForTimeout(60 * 1000);
+        if (ls) {
+            console.log("end ffmpeg-cmd");
+            ls.kill('SIGKILL');
+        }
         console.log("now start transcoding");
         const ls_out_cmd = [
             'ffmpeg-out-1920-mp4.sh', 
