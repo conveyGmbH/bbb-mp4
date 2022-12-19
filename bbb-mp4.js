@@ -140,11 +140,9 @@ async function main() {
         // Stop xvfb after browser close
         console.log("stopSync");
         xvfb.stopSync();
-        console.log("wait a while...");
-        await page.waitForTimeout(60 * 1000);
         if (ls) {
             console.log("end ffmpeg-cmd");
-            ls.kill('SIGKILL');
+            ls.kill();
         }
         console.log("now start transcoding");
         const ls_out_cmd = [
