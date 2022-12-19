@@ -141,7 +141,7 @@ async function main() {
         xvfb.stopSync();
         await page.waitForTimeout(5 * 1000);
         if (ls) {
-            ls.close();
+            ls.kill();
         }
         const ls_out_cmd = [
             'ffmpeg-out-1920-mp4.sh', 
