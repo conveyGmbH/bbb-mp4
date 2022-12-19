@@ -31,7 +31,7 @@ var options = {
 options.executablePath = "/usr/bin/google-chrome"
 async function main() {
     console.log("bbb-mp4 - start");
-    const ls = null;
+    var ls = null;
     let browser, page;
     try {
         console.log("startSync");
@@ -137,15 +137,13 @@ async function main() {
         page.close && await page.close()
         console.log("close browser");
         browser.close && await browser.close()
-        // Stop xvfb after browser close
-        console.log("stopSync");
-        xvfb.stopSync();
-        await page.waitForTimeout(5 * 1000);
         if (ls) {
             console.log("close ffmpeg-cmd");
             await ls.kill(0);
-            console.log("ffmpeg-cmd closed");
         }
+        // Stop xvfb after browser close
+        console.log("stopSync");
+        xvfb.stopSync();
         const ls_out_cmd = [
             'ffmpeg-out-1920-mp4.sh', 
             'ffmpeg-out-1920-webm.sh'
