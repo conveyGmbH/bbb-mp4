@@ -10,9 +10,8 @@ ffmpeg -y -nostats -draw_mouse 0 -s 1920x1080 \
 	-f alsa -thread_queue_size 1024 \
 	-itsoffset 1.24 \
 	-i pulse -ac 2 \
-	-b:a 128k -b:v 4000k \
 	-c:v libx264 -c:a aac  \
-	-crf 22  \
+	-minrate 2M -b:v 4000k -r 30 \
 	-pix_fmt yuv420p \
 	-preset fast \
 	-movflags frag_keyframe+separate_moof+omit_tfhd_offset+empty_moov \
