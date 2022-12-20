@@ -2,7 +2,7 @@
 
 #Output as MP4 video
 echo "encoding $1-1280.mp4 started"
-mkdir $1
+mkdir /usr/src/app/download/$1
 ffmpeg -y \
 	-i /usr/src/app/download/$1.mp4 \
 	-c:v libx264 -vf 'scale=1280:-1' -crf 25 -maxrate 1.5M -bufsize 3M -preset slow -threads 0 \

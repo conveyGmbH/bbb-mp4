@@ -2,7 +2,7 @@
 
 #Output as WEBM video
 echo "encoding $1-800.webm started pass 1"
-mkdir $1
+mkdir /usr/src/app/download/$1
 ffmpeg -y \
        -i /usr/src/app/download/$1.mp4 \
        -c:v libvpx-vp9 -vf 'scale=800:-1' -crf 28 -maxrate 800k -preset slow -threads 0 -pass 1 -an -f null /dev/null

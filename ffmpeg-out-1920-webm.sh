@@ -2,7 +2,7 @@
 
 #Output as WEBM video
 echo "encoding $1-1920.webm started pass 1"
-mkdir $1
+mkdir /usr/src/app/download/$1
 ffmpeg -y \
        -i /usr/src/app/download/$1.mp4 \
        -c:v libvpx-vp9 -crf 25 -maxrate 2.5M -pass 1 -an -f null /dev/null
