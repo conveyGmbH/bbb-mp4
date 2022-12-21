@@ -90,10 +90,13 @@ async function main() {
         console.log("wait for layout");
         await page.waitForSelector('#conference.mediaview #layout');
 
-        await page.$eval('.customer-top-header', element => element.style.display = "none");
-        await page.$eval('.content-grid', element => element.style.display = "none");
-        await page.$eval('.hero-footer', element => element.style.display = "none");
-        await page.$eval('#conference.mediaview #layout > section[role="region"] ', element => element.style.display = "none");
+        await page.$eval(".speakerSession",
+            element => {
+                if (element.classList) {
+                    element.classList.add("hide-ui-elements");
+                }
+            }
+        );
 
         console.log("wait for audioModal/listenOnlyBtn");
         await page.waitForSelector('div[data-test="audioModal"] button[data-test="listenOnlyBtn"]');
