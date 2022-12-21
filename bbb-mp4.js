@@ -99,7 +99,7 @@ async function main() {
         await page.waitForSelector('div[data-test="audioModal"] button[data-test="listenOnlyBtn"]');
         page.click('div[data-test="audioModal"] button[data-test="listenOnlyBtn"]');
 
-        await page.waitForTimeout(250);
+        await page.waitForTimeout(2 * 1000);
         console.log("Start capturing screen with ffmpeg");
         ls = child_process.spawn('sh', ['ffmpeg-cmd.sh', ' ',
             `${exportname}`, ' ',
@@ -132,7 +132,7 @@ async function main() {
     } catch (err) {
         console.log(err)
     } finally {
-        await page.waitForTimeout(2 * 1000);
+        await page.waitForTimeout(5 * 1000);
         console.log("close page");
         page.close && await page.close()
         console.log("close browser");
