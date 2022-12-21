@@ -11,5 +11,5 @@ ffmpeg -y \
        -i /usr/src/app/download/$1.mp4 \
        -c:v libvpx-vp9 -vf 'scale=1280:-1' -crf 28 -preset slow -threads 0 -pass 2 -c:a libopus \
        /usr/src/app/download/$1/VP9-1280.webm
-echo "VP9-1280.mp4" >> /usr/src/app/download/$1/files.txt
+echo "VP9-1280.webm" >> /usr/src/app/download/$1/files.txt
 echo "encoding $1-1280.webm finished"
