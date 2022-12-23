@@ -1,0 +1,11 @@
+[Unit]
+Description=convey's variant of BBB recording to MP4
+
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/node /var/www/bbb-mp4/server/server.js
+
+[Install]
+WantedBy=multi-user.target

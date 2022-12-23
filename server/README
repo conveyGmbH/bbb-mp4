@@ -1,0 +1,20 @@
+Installation des Dienstes mit "sh InstallServer.sh".
+
+Das Installations-Verzeichnis ist auf /var/www/bbb-mp4/server/ hartcodiert,
+muss ggf. in conveyBBBRecording.service angepasst werden.
+
+Danach kann er mit systemctl kontrolliert werden, z.B.:
+
+  sudo systemctl start conveyBBBRecording
+  sudo systemctl stop conveyBBBRecording
+  sudo systemctl status conveyBBBRecording
+
+Falls der Service nicht mehr automatisch beim Systemstart gestartet werden soll:
+  sudo systemctl disable conveyBBBRecording
+
+Das Gegenstück dafür:
+  sudo systemctl enable conveyBBBRecording
+  
+Das Console-Log sollte man mittels
+  sudo journalctl -fu conveyBBBRecording
+abrufen können.
