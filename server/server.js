@@ -5,6 +5,8 @@ const child_process = require('child_process');
 async function main() {
     const port = 3101;
 
+    process.chdir("/var/www/bbb-mp4");
+    console.log('Running in '+process.cwd());
     http.createServer(function (req, res) {
         try {
             console.log("Start Request");
