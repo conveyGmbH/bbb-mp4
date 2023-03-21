@@ -124,6 +124,7 @@ async function main() {
         });
         console.log("wait for meetingEndedModalTitle");
         var meetingEnd = false;
+        var lastAudioOnlineTS = null; 
         while (!meetingEnd) {
             try {
                 await page.waitForSelector('#conference.mediaview h1[data-test="meetingEndedModalTitle"]');
@@ -131,9 +132,23 @@ async function main() {
             } catch (err) {
                 console.log("waiting for meetingEndedModalTitle...");
             }
+            try {
+                await page.waitForSelector('#conference.mediaview #layout button[data-test="leaveAudio"]');
+                lastAudioOnlineTS = new Date();
+                console.log("audio connection online...");
+            } catch (err) {
+                if (lastAudioOnlineTS) {
+                    console.log("audio connection lost...");
+                    var now = new Date();
+                    if (now.getTime() - lastAudioOnlineTS.getTime() >= 30000) {
+                        console.log("audio timeout occured...");
+                        meetingEnd = true;
+                    }
+                }
+            }
         }
     } catch (err) {
-        console.log(err)
+        console.log(err);
     } finally {
         await page.waitForTimeout(5 * 1000);
         console.log("close page");
