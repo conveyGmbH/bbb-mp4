@@ -31,27 +31,71 @@ var options = {
 }
 options.executablePath = "/usr/bin/google-chrome"
 async function main() {
-    console.log("bbb-mp4 - start");
+    var logTs = function () {
+        var currentTime = new Date();
+        var ms = currentTime.getMilliseconds();
+        var str = currentTime.toLocaleString();
+        if (ms < 10) {
+            str += ".00";
+        } else if (ms < 100) {
+            str += ".0";
+        } else {
+            str += ".";
+        }
+        str += ms.toString();
+        return str;
+    } 
+
+    var logOut = function (message, id, level) {
+        var text = "[" + logTs() + "] " + (id ? id + ": " : "") + message;
+        switch(level) {
+            case "error":
+                console.error("*" + text);
+                break;
+            case "warn":
+                console.warn("!" + text);
+                break;
+            case "info":
+                console.info("^" + text);
+                break;
+            default: 
+                console.log(" " + text);
+        }
+    }
+    var logPrint = function(message, id) {
+        logOut(message, id);
+    }
+    var logWarn = function (message, id) {
+        logOut(message, id, "warn");
+    }
+    var logInfo = function (message, id) {
+        logOut(message, id, "info");
+    }
+    var logError = function (message, id) {
+        logOut(message, id, "error");
+    }
+    logPrint("bbb-mp4 - start");
+    var exportname = null;
     var ls = null;
     let browser, page;
     try {
-        console.log("startSync");
+        logPrint("startSync");
         xvfb.startSync()
 
         var url = process.argv[2];
         if (!url) {
-            console.warn('url undefined!');
+            logWarn('url undefined!');
             process.exit(1);
         }
-        console.log("url=" + url);
+        logPrint("url=" + url);
 
         // Set exportname
-        var exportname = process.argv[3];
+        exportname = process.argv[3];
         if (!exportname) {
-            console.warn('exportname undefined!');
+            logWarn('exportname undefined!');
             process.exit(1);
         }
-        console.log("exportname=" + exportname);
+        logPrint("exportname=" + exportname);
 
         // set duration to 0 
         var duration = 0
@@ -63,13 +107,13 @@ async function main() {
 
         page.on('console', msg => {
             var m = msg.text();
-            console.log('PAGE LOG:', m) // uncomment if you need
+            logPrint('PAGE LOG: ' + m, exportname) // uncomment if you need
         });
 
         await page._client.send('Emulation.clearDeviceMetricsOverride')
             // Catch URL unreachable error
         await page.goto(url, { waitUntil: 'networkidle2' }).catch(e => {
-            console.error('Recording URL unreachable!');
+            logError('Recording URL unreachable!', exportname);
             process.exit(2);
         })
         await page.setBypassCSP(true)
@@ -78,16 +122,16 @@ async function main() {
         await page.waitForTimeout(5 * 1000);
         try {
             var loadMsg = await page.$eval('.error-code', el => el.textContent);
-            console.log(loadMsg)
+            logPrint(loadMsg, exportname)
             if (loadMsg == "404") {
-                console.warn("Recording not found!");
+                logWarn("Recording not found!", exportname);
                 process.exit(1);
             }
         } catch (err) {
-            console.log("Valid URL!")
+            logPrint("Valid URL!", exportname)
         }
 
-        console.log("wait for layout");
+        logPrint("wait for layout", exportname);
         await page.waitForSelector('#conference.mediaview #layout');
 
         await page.$eval(".speakerSession",
@@ -98,12 +142,12 @@ async function main() {
             }
         );
 
-        console.log("wait for audioModal/listenOnlyBtn");
+        logPrint("wait for audioModal/listenOnlyBtn", exportname);
         await page.waitForSelector('div[data-test="audioModal"] button[data-test="listenOnlyBtn"]');
         page.click('div[data-test="audioModal"] button[data-test="listenOnlyBtn"]');
 
         await page.waitForTimeout(2 * 1000);
-        console.log("Start capturing screen with ffmpeg");
+        logPrint("Start capturing screen with ffmpeg", exportname);
         ls = child_process.spawn('sh', ['ffmpeg-cmd.sh', ' ',
             `${exportname}`, ' ',
             `${disp_num}`
@@ -112,17 +156,17 @@ async function main() {
         });
 
         ls.stdout.on('data', (data) => {
-            console.log(`ffmpeg-cmd stdout: ${data}`);
+            logPrint(`ffmpeg-cmd stdout: ${data}`, exportname);
         });
 
         ls.stderr.on('data', (data) => {
-            console.error(`ffmpeg-cmd stderr: ${data}`);
+            logError(`ffmpeg-cmd stderr: ${data}`, exportname);
         });
 
         ls.on('close', (code) => {
-            console.log(`ffmpeg-cmd child process exited with code ${code}`);
+            logPrint(`ffmpeg-cmd child process exited with code ${code}`, exportname);
         });
-        console.log("wait for meetingEndedModalTitle");
+        logPrint("wait for meetingEndedModalTitle", exportname);
         var meetingEnd = false;
         var lastAudioOnlineTS = null; 
         while (!meetingEnd) {
@@ -130,38 +174,44 @@ async function main() {
                 await page.waitForSelector('#conference.mediaview h1[data-test="meetingEndedModalTitle"]');
                 meetingEnd = true;
             } catch (err) {
-                console.log("waiting for meetingEndedModalTitle...");
+                logPrint("waiting for meetingEndedModalTitle...", exportname);
             }
             try {
                 await page.waitForSelector('#conference.mediaview #layout button[data-test="leaveAudio"]');
                 lastAudioOnlineTS = new Date();
-                console.log("audio connection online...");
+                logPrint("audio connection online...", exportname);
             } catch (err) {
                 if (lastAudioOnlineTS) {
-                    console.log("audio connection lost...");
+                    logPrint("audio connection lost...", exportname);
                     var now = new Date();
                     if (now.getTime() - lastAudioOnlineTS.getTime() >= 30000) {
-                        console.log("audio timeout occured...");
+                        logPrint("audio timeout occured...", exportname);
                         meetingEnd = true;
                     }
                 }
             }
         }
     } catch (err) {
-        console.log(err);
+        logError("Exception occured!", exportname);
+        logError(err, exportname);
     } finally {
         await page.waitForTimeout(5 * 1000);
-        console.log("close page");
+        logPrint("close page", exportname);
         page.close && await page.close()
-        console.log("close browser");
+        logPrint("close browser", exportname);
         browser.close && await browser.close()
         // Stop xvfb after browser close
-        console.log("stopSync");
-        xvfb.stopSync();
+        logPrint("stopSync", exportname);
+        try {
+            xvfb.stopSync();
+        } catch (err) {
+            logError("Exception occured!", exportname);
+            logError(err, exportname);
+        }
         if (ls) {
-            console.log("kill sync ffmpeg job pid=" + ls.pid);
+            logPrint("kill sync ffmpeg job pid=" + ls.pid, exportname);
             kill(ls.pid);
-            console.log("now start transcoding");
+            logPrint("now start transcoding", exportname);
             const ls_out_cmd = [
                 'ffmpeg-out-1920-mp4.sh', 
                 //'ffmpeg-out-1920-webm.sh',
@@ -180,18 +230,18 @@ async function main() {
             }
             var setShCmdHandler = function(child, index) {
                 child.stdout.on('data', (data) => {
-                    console.log(ls_out_cmd[index] + ` stdout: ${data}`);
+                    logPrint(ls_out_cmd[index] + ` stdout: ${data}`, exportname);
                 });
                 child.stderr.on('data', (data) => {
-                    console.error(ls_out_cmd[index] + ` stderr: ${data}`);
+                    logError(ls_out_cmd[index] + ` stderr: ${data}`, exportname);
                 });
                 child.on('close', (code) => {
-                    console.log(ls_out_cmd[index] + ` child process exited with code ${code}`);
+                    logPrint(ls_out_cmd[index] + ` child process exited with code ${code}`, exportname);
                 });
                 promises[index] = promiseFromChildProcess(child);
             }            
             for (var i = 0; i < ls_out_cmd.length; i++) {
-                console.log("call " + ls_out_cmd[i]);
+                logPrint("call " + ls_out_cmd[i], exportname);
                 ls_out[i] = child_process.spawn('sh', [
                     ls_out_cmd[i], ' ',
                     `${exportname}`
@@ -202,7 +252,7 @@ async function main() {
             }
             await Promise.all(promises);
         }
-        console.log("bbb-mp4 - end");
+        logPrint("bbb-mp4 - end", exportname);
     }
 }
 
