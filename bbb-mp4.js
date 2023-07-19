@@ -184,7 +184,7 @@ async function main() {
                 if (lastAudioOnlineTS) {
                     logPrint("audio connection lost...", exportname);
                     var now = new Date();
-                    if (now.getTime() - lastAudioOnlineTS.getTime() >= 30000) {
+                    if (now.getTime() - lastAudioOnlineTS.getTime() >= 60000) {
                         logPrint("audio timeout occured...", exportname);
                         meetingEnd = true;
                     }
